@@ -1,13 +1,16 @@
+import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { ResourceApiInput } from "@/types/Resource";
-import { useMutation } from "@tanstack/react-query";
 
-export const useCreateResourceMutation = () => {
-  return useMutation({
+export const useCreateResourceMutation = (
+  options?: UseMutationOptions<Response, unknown, ResourceApiInput>
+) => {
+  return useMutation<Response, unknown, ResourceApiInput>({
     mutationFn: (data: ResourceApiInput) => {
       return fetch("/api/resource", {
         method: "POST",
         body: JSON.stringify(data),
       });
     },
+    ...options,
   });
 };
